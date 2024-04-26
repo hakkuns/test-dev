@@ -7,7 +7,7 @@ on: # トリガー条件
 jobs:
   test1:
     runs-on: ubuntu-latest # 実行環境
-    if: github.event.base.ref == 'main' # ベースブランチがmainの場合のみ実行
+    if: github.event.pull_request.base.ref == 'main' # ベースブランチがmainの場合のみ実行
     steps:
       - name: Checkout code # リポジトリのチェックアウト
         uses: actions/checkout@v3
