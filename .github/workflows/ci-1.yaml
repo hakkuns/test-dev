@@ -40,3 +40,4 @@ jobs:
             yarn test -- --findRelatedTests $CHANGED_FILES  # 関連するテストを実行
           else
             echo "No changes detected."
+          fi
