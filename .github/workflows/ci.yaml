@@ -13,7 +13,8 @@ on: # トリガー条件
 
 jobs:
   diff_test:
-    if: github.event.status == 'ready_for_review'
+    # Run only when 'ready_for_review' event is triggered
+    if: github.event_name == 'pull_request' && github.event.action == 'ready_for_review'
     runs-on: ubuntu-latest # 実行環境
     steps:
       - name: Checkout code # リポジトリのチェックアウト
