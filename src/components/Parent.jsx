@@ -5,7 +5,7 @@ export const Parent = () => {
 	return (
 		<div>
 			<h1>Parent</h1>
-			<p>Parent</p>
+			<p>ParentParent</p>
 			<Child1 />
 			<Child2 />
 		</div>
