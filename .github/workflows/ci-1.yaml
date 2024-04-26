@@ -3,8 +3,6 @@ name: CI Workflow # ワークフローの名前
 on: # トリガー条件
   pull_request_review:
     types: [submitted]
-    branches:
-      - main
 
 jobs:
   test1:
