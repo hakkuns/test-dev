@@ -2,13 +2,12 @@ name: CI Workflow # ワークフローの名前
 
 on: # トリガー条件
   pull_request:
+    types: [ready_for_review]
     branches:
       - main
 
 jobs:
   test:
-    # run only if this PR has opened
-    if: github.event_name == 'pull_request' && github.event.action == 'ready_for_review'
     runs-on: ubuntu-latest # 実行環境
     steps:
       - name: Checkout code # リポジトリのチェックアウト
