@@ -1,10 +1,8 @@
-name: CI Workflow # ワークフローの名前
+name: CI Workflow2 # ワークフローの名前
 
 on: # トリガー条件
   pull_request_review:
     types: [submitted]
-    branches:
-      - feature1
 
 jobs:
   test2:

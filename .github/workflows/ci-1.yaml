@@ -1,4 +1,4 @@
-name: CI Workflow # ワークフローの名前
+name: CI Workflow1 # ワークフローの名前
 
 on: # トリガー条件
   pull_request_review:
