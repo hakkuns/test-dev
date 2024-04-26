@@ -7,7 +7,7 @@ on: # トリガー条件
       - feature1
 
 jobs:
-  test:
+  test2:
     runs-on: ubuntu-latest # 実行環境
     if: github.event.base.ref == 'feature1' # ベースブランチがfeature1の場合のみ実行
     steps:
