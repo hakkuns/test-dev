@@ -37,7 +37,7 @@ jobs:
         run: |
           CHANGED_FILES="${{ steps.changes.outputs.changed_files }}"  # 環境変数から差分ファイルを取得
           if [[ ! -z "$CHANGED_FILES" ]]; then  # 差分がある場合に関連するテストを実行
-            yarn test -- --findRelatedTests $CHANGED_FILES  # 関連するテストを実行
+            yarn test related $CHANGED_FILES  # 関連するテストを実行
           else
             echo "No changes detected."
           fi
