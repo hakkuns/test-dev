@@ -7,10 +7,6 @@ describe("Simple working test", () => {
 		render(<App />);
 		expect(screen.getByText("Vite + React")).toBeInTheDocument();
 	});
-	it("the title is visible 2", () => {
-		render(<App />);
-		expect(screen.getByText("Vite + React")).toBeInTheDocument();
-	});
 	it("should increment count on click", async () => {
 		render(<App />);
 		const counter = screen.getByRole("button", { name: /count is/i });
