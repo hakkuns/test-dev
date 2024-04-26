@@ -28,6 +28,9 @@ jobs:
       - name: Install Yarn # Yarnのセットアップ
         run: npm install -g yarn
 
+      - name: Install dependencies # 依存関係のインストール
+        run: yarn install
+
       - name: Get changes since base branch
         id: changes
         run: |
