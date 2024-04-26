@@ -9,8 +9,10 @@ on: # トリガー条件
       - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest # 実行環境
+    environment:
+      name: test # 環境名
     steps:
       - name: Checkout code # リポジトリのチェックアウト
         uses: actions/checkout@v3
