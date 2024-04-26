@@ -1,16 +1,14 @@
-name: CI Workflow # ワークフローの名前
+name: CI Workflow1 # ワークフローの名前
 
 on: # トリガー条件
   pull_request_review:
     types: [submitted]
-    branches:
-      - main
 
 jobs:
   test1:
     runs-on: ubuntu-latest # 実行環境
+    if: github.event.pull_request.base.ref == 'main' # ベースブランチがmainの場合のみ実行
     steps:
-    if: github.event.base.ref == 'main' # ベースブランチがmainの場合のみ実行
       - name: Checkout code # リポジトリのチェックアウト
         uses: actions/checkout@v3
 
