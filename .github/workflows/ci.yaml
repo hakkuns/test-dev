@@ -5,9 +5,47 @@ on: # トリガー条件
     types: [ready_for_review]
     branches:
       - main
+      - develop
+  pull_request_review:
+    types: [submitted]
+  # Manual trigger
+  workflow_dispatch:
 
 jobs:
-  test:
+  diff_test:
+    if: github.event.status == 'ready_for_review'
+    runs-on: ubuntu-latest # 実行環境
+    steps:
+      - name: Checkout code # リポジトリのチェックアウト
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js # Node.js環境のセットアップ
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18" # Node.jsのバージョン
+
+      - name: Install Yarn # Yarnのセットアップ
+        run: npm install -g yarn
+
+      - name: Get changes since base branch
+        id: changes
+        run: |
+          git fetch origin
+          BASE_BRANCH="${{ github.event.pull_request.base.ref }}"  # ベースブランチの名前を取得
+          CHANGED_FILES=$(git diff --name-only origin/$BASE_BRANCH)  # 差分ファイルを環境変数に保存
+          echo "::set-output name=changed_files::$CHANGED_FILES"  # Actionsに保存
+
+      - name: Run Jest tests for related files
+        run: |
+          CHANGED_FILES="${{ steps.changes.outputs.changed_files }}"  # 環境変数から差分ファイルを取得
+          if [[ ! -z "$CHANGED_FILES" ]]; then  # 差分がある場合に関連するテストを実行
+            yarn test related $CHANGED_FILES  # 関連するテストを実行
+          else
+            echo "No changes detected."
+          fi
+
+  full_test:
+    if: ((github.event.pull_request.base.ref == 'main' || github.event.pull_request.base.ref == 'develop') && github.event.review.state == 'approved') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest # 実行環境
     steps:
       - name: Checkout code # リポジトリのチェックアウト
