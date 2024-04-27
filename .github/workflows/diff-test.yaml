@@ -1,11 +1,6 @@
-name: CI Workflow # ワークフローの名前
+name: CI Workflow Diff Test # ワークフローの名前
 
 on: # トリガー条件
-  pull_request:
-    types: [ready_for_review]
-    branches:
-      - main
-      - develop
   pull_request_review:
     types: [submitted]
   # Manual trigger
@@ -14,7 +9,8 @@ on: # トリガー条件
 jobs:
   diff_test:
     # Run only when 'ready_for_review' event is triggered
-    if: github.event_name == 'pull_request' && github.event.action == 'ready_for_review'
+    name: Diff Test for PR on ${{ github.event.pull_request.head.ref }}
+    if: ((github.event.pull_request.base.ref == 'main' || github.event.pull_request.base.ref == 'develop') && github.event_name == 'pull_request_review') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -34,7 +30,7 @@ jobs:
       - name: Get changes since base branch
         id: changes
         run: |
-          git fetch origin
+          git fetch origin > /dev/null
           BASE_BRANCH="${{ github.event.pull_request.base.ref }}"  # ベースブランチの名前を取得
           MODIFIED_FILES=$(git diff --name-only origin/$BASE_BRANCH..${{ github.event.pull_request.head.sha }})  # 差分ファイルを環境変数に保存
           echo "MODIFIED_FILES=$MODIFIED_FILES" >> $GITHUB_ENV
@@ -45,7 +41,7 @@ jobs:
           yarn test related ${{ env.MODIFIED_FILES }}   # 関連するテストを実行
 
   full_test:
-    if: ((github.event.pull_request.base.ref == 'main' || github.event.pull_request.base.ref == 'develop') && github.event_name == 'pull_request_review') || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'pull_request' && github.event.action == 'ready_for_review'
     runs-on: ubuntu-latest # 実行環境
     steps:
       - name: Checkout code # リポジトリのチェックアウト
