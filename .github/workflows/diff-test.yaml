@@ -9,7 +9,6 @@ on: # トリガー条件
 jobs:
   diff_test:
     # Run only when 'ready_for_review' event is triggered
-    name: Test for PR
     if: ((github.event.pull_request.base.ref == 'main' || github.event.pull_request.base.ref == 'develop') && github.event_name == 'pull_request_review') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
