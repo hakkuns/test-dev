@@ -4,6 +4,8 @@ export const Child1 = () => {
 			<h2>Child1</h2>
 			<p>test</p>
 			<p>test</p>
+			<p>test</p>
+			<p>test</p>
 		</div>
 	);
 };
