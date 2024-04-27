@@ -32,7 +32,7 @@ jobs:
           BASE_BRANCH="${{ github.event.pull_request.base.ref }}"  # ベースブランチの名前を取得
           MODIFIED_FILES=$(git diff --name-only origin/$BASE_BRANCH..${{ github.event.pull_request.head.sha }})  # 差分ファイルを環境変数に保存
           echo $MODIFIED_FILES
-          echo "MODIFIED_FILES=$MODIFIED_FILES" >> $GITHUB_ENV
+          echo "MODIFIED_FILES=\"$MODIFIED_FILES\"" >> $GITHUB_ENV
 
       - name: Run Jest tests for related files
         if: env.MODIFIED_FILES
