@@ -1,0 +1,32 @@
+name: CI Workflow Full Test # ワークフローの名前
+
+on: # トリガー条件
+  pull_request:
+    types: [ready_for_review]
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+jobs:
+  full_test:
+    name: Test for PR on branch: ${{ github.event.issue.pull_request.head.ref }}
+    if: github.event.action == 'ready_for_review'
+    runs-on: ubuntu-latest # 実行環境
+    steps:
+      - name: Checkout code # リポジトリのチェックアウト
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js # Node.js環境のセットアップ
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18" # Node.jsのバージョン
+
+      - name: Install Yarn # Yarnのセットアップ
+        run: npm install -g yarn
+
+      - name: Install dependencies # 依存関係のインストール
+        run: yarn install
+
+      - name: Run tests # テストの実行
+        run: yarn test
