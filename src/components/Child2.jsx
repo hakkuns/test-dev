@@ -4,7 +4,6 @@ export const Child2 = () => {
 			<h2>Child2</h2>
 			<p>test</p>
 			<p>test</p>
-			<p>test</p>
 		</div>
 	);
 };
