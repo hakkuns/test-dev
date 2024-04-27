@@ -3,8 +3,6 @@ name: CI Workflow Diff Test # ワークフローの名前
 on: # トリガー条件
   pull_request_review:
     types: [submitted]
-  # Manual trigger
-  workflow_dispatch:
 
 jobs:
   diff_test:
