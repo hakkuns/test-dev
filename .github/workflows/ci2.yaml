@@ -1,6 +1,7 @@
-name: CI Workflow # ワークフローの名前
+name: CI Workflow Manual # ワークフローの名前
 
 on: # トリガー条件
+  # Manual trigger
   workflow_dispatch:
 
 jobs:
