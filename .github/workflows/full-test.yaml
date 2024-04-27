@@ -10,8 +10,7 @@ on: # トリガー条件
 
 jobs:
   full_test:
-    name: Full Test for PR on ${{ github.event.pull_request.head.ref }}
-    if: github.event.action == 'ready_for_review'
+    if: github.event.action == 'ready_for_review' || github.event_name == 'workflow_dispatch' # レビューが完了したときに実行
     runs-on: ubuntu-latest # 実行環境
     steps:
       - name: Checkout code # リポジトリのチェックアウト
