@@ -15,15 +15,15 @@ jobs:
   diff_test:
     # Run only when 'ready_for_review' event is triggered
     if: github.event_name == 'pull_request' && github.event.action == 'ready_for_review'
-    runs-on: ubuntu-latest # 実行環境
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code # リポジトリのチェックアウト
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js # Node.js環境のセットアップ
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18" # Node.jsのバージョン
+          node-version: "18"
 
       - name: Install Yarn # Yarnのセットアップ
         run: npm install -g yarn
@@ -37,10 +37,10 @@ jobs:
           git fetch origin
           BASE_BRANCH="${{ github.event.pull_request.base.ref }}"  # ベースブランチの名前を取得
           MODIFIED_FILES=$(git diff --name-only origin/$BASE_BRANCH..${{ github.event.pull_request.head.sha }})  # 差分ファイルを環境変数に保存
-          echo "MODIFIED_FILES=$MODIFIED_FILES" >> $GITHUB_ENV 
+          echo "MODIFIED_FILES=$MODIFIED_FILES" >> $GITHUB_ENV
 
       - name: Run Jest tests for related files
-      if: env.MODIFIED_FILES
+        if: env.MODIFIED_FILES
         run: |
           yarn test related ${{ env.MODIFIED_FILES }}   # 関連するテストを実行
 
