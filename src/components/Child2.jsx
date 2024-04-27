@@ -3,7 +3,6 @@ export const Child2 = () => {
 		<div>
 			<h2>Child2</h2>
 			<p>test</p>
-			<p>test</p>
 		</div>
 	);
 };
